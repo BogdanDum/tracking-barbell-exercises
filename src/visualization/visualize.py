@@ -8,6 +8,9 @@ from IPython.display import display
 # --------------------------------------------------------------
 
 df = pd.read_pickle("../../data/interim/processed_data_01.pkl")
+df = df[['acc_x', 'acc_y', 'acc_z', 'gyr_x', 'gyr_y', 'gyr_z', 'participant', 'label', 'category', 'set']]
+
+#df.columns
 
 # --------------------------------------------------------------
 # Plot single columns
@@ -79,21 +82,98 @@ participant = "A"
 all_axis_df = df.query(f"label == '{label}'").query(f"participant == '{participant}'")
 
 fig, ax = plt.subplots()
-all_axis_df[["acc_x", "acc_y", "acc_z"]].plot(ax=ax)
-ax.set_xlabel("samples")
+all_axis_df[["acc_x", "acc_y", "acc_z"]].plot(ax = ax)
 ax.set_ylabel("acc_y")
+ax.set_xlabel("samples")
 plt.legend()
 
 # --------------------------------------------------------------
 # Create a loop to plot all combinations per sensor
 # --------------------------------------------------------------
 
+labels = df["label"].unique()
+participants = df["participant"].unique()
 
+for label in labels:
+    for participant in participants:
+        all_axis_df = (
+            df.query(f"label == '{label}'")
+            .query(f"participant == '{participant}'")
+            .reset_index()
+        )
+        
+        if len(all_axis_df) > 0:
+            fig, ax = plt.subplots()
+            all_axis_df[["acc_x", "acc_y", "acc_z"]].plot(ax = ax)
+            ax.set_ylabel("acc_y")
+            ax.set_xlabel("samples")
+            plt.title(f"{label} ({participant})".title())
+            plt.legend() 
+            
+
+for label in labels:
+    for participant in participants:
+        all_axis_df = (
+            df.query(f"label == '{label}'")
+            .query(f"participant == '{participant}'")
+            .reset_index()
+        )
+        
+        if len(all_axis_df) > 0:
+            fig, ax = plt.subplots()
+            all_axis_df[["gyr_x", "gyr_y", "gyr_z"]].plot(ax = ax)
+            ax.set_ylabel("gyr_y")
+            ax.set_xlabel("samples")
+            plt.title(f"{label} ({participant})".title())
+            plt.legend()        
+    
+        
 # --------------------------------------------------------------
 # Combine plots in one figure
 # --------------------------------------------------------------
+
+# combine acc and gyr plots together for each individual
+label = "row"
+participant = "A"
+df_combine = (
+    df.query(f"label == '{label}'")
+    .query(f"participant == '{participant}'")
+    .reset_index(drop = True)
+)
+
+fig, ax = plt.subplots(nrows = 2, sharex = True, figsize = (20, 10))
+df_combine[["acc_x", "acc_y", "acc_z"]].plot(ax = ax[0])
+df_combine[["gyr_x", "gyr_y", "gyr_z"]].plot(ax = ax[1])
+
+#add some styling to the plots
+ax[0].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), ncol = 3, fancybox = True, shadow = True)
+ax[1].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), ncol = 3, fancybox = True, shadow = True)
+ax[1].set_xlabel("samples")
 
 
 # --------------------------------------------------------------
 # Loop over all combinations and export for both sensors
 # --------------------------------------------------------------
+
+labels = df["label"].unique()
+participants = df["participant"].unique()
+
+for label in labels:
+    for participant in participants:
+        df_combine = (
+            df.query(f"label == '{label}'")
+            .query(f"participant == '{participant}'")
+            .reset_index()
+        )
+        
+        if len(df_combine) > 0:
+            fig, ax = plt.subplots(nrows = 2, sharex = True, figsize = (20, 10))
+            df_combine[["acc_x", "acc_y", "acc_z"]].plot(ax = ax[0])
+            df_combine[["gyr_x", "gyr_y", "gyr_z"]].plot(ax = ax[1])
+
+            #add some styling to the plots
+            ax[0].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), ncol = 3, fancybox = True, shadow = True)
+            ax[1].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), ncol = 3, fancybox = True, shadow = True)
+            ax[1].set_xlabel("samples")
+            plt.savefig(f"../../reports/figures/{label.title()} ({participant}).png")
+            plt.show()
