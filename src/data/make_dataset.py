@@ -150,9 +150,18 @@ acc_df, gyr_df = read_data(files)
 merged_data = pd.concat([acc_df.iloc[:, :3], gyr_df], axis = 1)
 
 # update the names of the columns
-merged_data.columns = ["acc_x", "acc_y", "acc_z",
-                       "gyr_x", "gyr_y", "gyr_z",
-                       "label", "category", "participant", "set"]
+merged_data.columns = [
+    "acc_x",
+    "acc_y",
+    "acc_z",
+    "gyr_x",
+    "gyr_y",
+    "gyr_z",
+    "participant",
+    "label",
+    "category",
+    "set",
+]
 
 
 # --------------------------------------------------------------
