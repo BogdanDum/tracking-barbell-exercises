@@ -5,18 +5,16 @@ import math
 import scipy
 from sklearn.neighbors import LocalOutlierFactor  # pip install scikit-learn
 
-# --------------------------------------------------------------
-# Load data
-# --------------------------------------------------------------
 
+
+# Load data
 df = pd.read_pickle("../../data/interim/processed_data_01.pkl")
 
 outlier_columns = list(df.columns[:6])
 
-# --------------------------------------------------------------
-# Plotting outliers
-# --------------------------------------------------------------
 
+
+# Plotting outliers
 #print(plt.style.available)
 plt.style.use("fivethirtyeight")
 plt.rcParams["figure.figsize"] = (20, 5)
@@ -81,12 +79,11 @@ def plot_binary_outliers(dataset, col, outlier_col, reset_index):
     )
     plt.show()
 
-# --------------------------------------------------------------
+
+
+
 # Interquartile range (distribution based)
-# --------------------------------------------------------------
-
-# Insert IQR function
-
+# IQR function
 def mark_outliers_iqr(dataset, col):
     """Function to mark values as outliers using the IQR method.
 
@@ -114,28 +111,30 @@ def mark_outliers_iqr(dataset, col):
 
     return dataset
 
-# Plot a single column
 
+# Plot a single column
 col = "acc_x"
 dataset = mark_outliers_iqr(df, col)
 plot_binary_outliers(dataset=dataset, col=col, outlier_col=col + "_outlier", reset_index=True)
+
 
 # Loop over all columns
 for col in outlier_columns:
     dataset = mark_outliers_iqr(df, col)
     plot_binary_outliers(dataset=dataset, col=col, outlier_col=col + "_outlier", reset_index=True)
 
-# --------------------------------------------------------------
-# Chauvenets criteron (distribution based)
-# --------------------------------------------------------------
 
+
+
+
+# Chauvenets criteron (distribution based)
 # Check for normal distribution
 df[outlier_columns[:3] + ["label"]].plot.hist(by = "label", figsize = (20, 10), layout = (3, 3))
 plt.show()
 df[outlier_columns[3:] + ["label"]].plot.hist(by = "label", figsize = (20, 10), layout = (3, 3))
 plt.show()
 
-# Insert Chauvenet's function
+# Chauvenet's function
 # it assumes a normal distribution of the data
 def mark_outliers_chauvenet(dataset, col, C=2):
     """Finds outliers in the specified column of datatable and adds a binary column with
@@ -186,13 +185,12 @@ for col in outlier_columns:
     dataset = mark_outliers_chauvenet(df, col)
     plot_binary_outliers(dataset=dataset, col=col, outlier_col=col + "_outlier", reset_index=True)
 
-# --------------------------------------------------------------
+
+
+
+
 # Local outlier factor (distance based)
-# --------------------------------------------------------------
-
-
-
-# Insert LOF function
+# LOF function
 def mark_outliers_lof(dataset, columns, n=20):
     """Mark values as outliers using LOF
 
@@ -222,9 +220,10 @@ dataset, outliers, X_scores = mark_outliers_lof(df, outlier_columns)
 for col in outlier_columns:
     plot_binary_outliers(dataset=dataset, col=col, outlier_col="outlier_lof", reset_index=True)
 
-# --------------------------------------------------------------
+
+
+
 # Check outliers grouped by label
-# --------------------------------------------------------------
 
 # check IQR
 # this seems to be a bit strict, throwing out a lot of data
@@ -247,9 +246,10 @@ dataset, outliers, X_scores = mark_outliers_lof(df, outlier_columns)
 for col in outlier_columns:
     plot_binary_outliers(dataset=dataset, col=col, outlier_col="outlier_lof", reset_index=True)
 
-# --------------------------------------------------------------
+
+
+
 # Choose method and deal with outliers
-# --------------------------------------------------------------
 
 # Test on single column
 
@@ -279,8 +279,7 @@ for col in outlier_columns:
 # check removal 
 removed_outliers_df.info()
 
-# --------------------------------------------------------------
-# Export new dataframe
-# --------------------------------------------------------------
 
+
+# Export new dataframe
 removed_outliers_df.to_pickle("../../data/interim/removed_outliers_chauvenet_02.pkl")
