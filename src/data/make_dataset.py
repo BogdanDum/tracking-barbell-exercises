@@ -1,24 +1,20 @@
 import pandas as pd
 from glob import glob
 
-# --------------------------------------------------------------
-# Read single CSV file
-# --------------------------------------------------------------
+# Read csv file
 
 single_file_acc = pd.read_csv("../../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv")
 
 single_file_gyr = pd.read_csv("../../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv")
 
-# --------------------------------------------------------------
-# List all data in data/raw/MetaMotion
-# --------------------------------------------------------------
+
+
+# Output all data from Metamotion folder
 
 files = glob("../../data/raw/MetaMotion/*.csv")
 len(files)
 
-# --------------------------------------------------------------
-# Extract features from filename
-# --------------------------------------------------------------
+# see features according to filenames
 
 data_path = "../../data/raw/MetaMotion/"
 f = files[0] # first file in folder
@@ -34,9 +30,9 @@ df["participant"] = participant
 df["label"] = label
 df["weight"] = weight
 
-# --------------------------------------------------------------
-# Read all files
-# --------------------------------------------------------------
+
+
+# Read all the files
 
 acc_df = pd.DataFrame()
 gyr_df = pd.DataFrame()
@@ -68,9 +64,9 @@ for f in files:
 
 acc_df[acc_df["set"] == 1]
 
-# --------------------------------------------------------------
-# Working with datetimes
-# --------------------------------------------------------------
+
+
+# Work with datetimes
 
 # convert object to datetime variable
 acc_df.info()
@@ -89,9 +85,9 @@ del gyr_df["epoch (ms)"]
 del gyr_df["time (01:00)"]
 del gyr_df["elapsed (s)"]
 
-# --------------------------------------------------------------
-# Turn into function
-# --------------------------------------------------------------
+
+
+# Turn the code until now into a function
 
 files = glob("../../data/raw/MetaMotion/*.csv")
 # len(files)
@@ -143,9 +139,9 @@ def read_data(files):
 
 acc_df, gyr_df = read_data(files)
 
-# --------------------------------------------------------------
-# Merging datasets
-# --------------------------------------------------------------
+
+
+# Merge the current datasets
 
 merged_data = pd.concat([acc_df.iloc[:, :3], gyr_df], axis = 1)
 
@@ -164,10 +160,8 @@ merged_data.columns = [
 ]
 
 
-# --------------------------------------------------------------
-# Resample data (frequency conversion)
-# --------------------------------------------------------------
 
+# Resample data (frequency conversion)
 # Accelerometer:    12.500HZ
 # Gyroscope:        25.000Hz
 
@@ -191,8 +185,7 @@ resampled_data["set"] =resampled_data["set"].astype("int")
 
 
 
-# --------------------------------------------------------------
 # Export dataset
-# --------------------------------------------------------------
+
 
 resampled_data.to_pickle("../../data/interim/processed_data_01.pkl")
