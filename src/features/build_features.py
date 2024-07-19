@@ -92,7 +92,19 @@ pca = PrincipalComponentAnalysis()
 
 pc_values = pca.determine_pc_explained_variance(df_pca, predictor_columns)
 
-# plot computed values on a graph
-
 # apply elbow technique
+
+# plot computed values on a graph
+plt.figure(figsize=(10, 10))
+plt.plot(range(1, len(predictor_columns) + 1), pc_values)
+plt.xlabel("Component number")
+plt.ylabel("Explained Variance")
+plt.show()
+# quite obvious from the graph there should be 3 principal components
+
+df_pca = pca.apply_pca(df_pca, predictor_columns, 3)
+# basically summarized the 6 variables into 3 principal components
+
+
+
 
