@@ -60,7 +60,7 @@ df_duration.iloc[1] / 10  # duration of 1 heavy rep
 df_lowpass = df.copy()
 lowpass = LowPassFilter()
 fs = 1000 / 200 # 5 instances per second
-cutoff = 1
+cutoff = 1.3
 
 # apply the filter to a single value
 df_lowpass = lowpass.low_pass_filter(df_lowpass, "acc_y", fs, cutoff, order = 5)
@@ -76,6 +76,23 @@ ax[0].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), fancybox = True
 ax[1].legend(loc = "upper center", bbox_to_anchor = (0.5, 1.15), fancybox = True, shadow = True)
 
 
+# apply filter to all columns
+for col in predictor_columns:
+    df_lowpass = lowpass.low_pass_filter(df_lowpass, col, fs, cutoff, order=5)
+    
+    # overwrite the original column
+    df_lowpass[col] = df_lowpass[col + "_lowpass"]
+    del df_lowpass[col + "_lowpass"]
 
 
+
+# PCA (Principal component analysis)
+df_pca = df_lowpass.copy()
+pca = PrincipalComponentAnalysis()
+
+pc_values = pca.determine_pc_explained_variance(df_pca, predictor_columns)
+
+# plot computed values on a graph
+
+# apply elbow technique
 
