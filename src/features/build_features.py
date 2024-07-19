@@ -105,6 +105,25 @@ plt.show()
 df_pca = pca.apply_pca(df_pca, predictor_columns, 3)
 # basically summarized the 6 variables into 3 principal components
 
+subset = df_pca[df_pca["set"] == 28]
+subset[["pca_1", "pca_2", "pca_3"]].plot()
+
+df_pca
 
 
 
+# Now use the sum of squares attribute
+# magnitude r is sqrt(x^2 + y^2 + z^2)
+
+df_squared = df_pca.copy()
+
+acc_r = df_squared["acc_x"] ** 2 + df_squared["acc_y"] ** 2 + df_squared["acc_z"] ** 2 
+gyr_r = df_squared["gyr_x"] ** 2 + df_squared["gyr_y"] ** 2 + df_squared["gyr_z"] ** 2
+
+df_squared["acc_r"] = np.sqrt(acc_r)
+df_squared["gyr_r"] = np.sqrt(gyr_r)
+
+subset = df_squared[df_squared["set"] == 28]
+subset[["acc_r", "gyr_r"]].plot(subplots = True)
+
+df_squared
