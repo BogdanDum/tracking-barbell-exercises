@@ -263,3 +263,8 @@ ax.set_ylabel("y-axis")
 ax.set_zlabel("z-axis")
 plt.legend()
 plt.show()
+
+
+
+# Export dataset
+df_cluster.to_pickle("../../data/interim/data_features_03.pkl")
