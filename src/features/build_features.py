@@ -127,10 +127,7 @@ df_squared["gyr_r"] = np.sqrt(gyr_r)
 subset = df_squared[df_squared["set"] == 28]
 subset[["acc_r", "gyr_r"]].plot(subplots = True)
 
-
 df_squared
-
-
 
 
 # Temporal abstraction (compute rolling average)
@@ -269,3 +266,4 @@ plt.show()
 
 # Export dataset
 df_cluster.to_pickle("../../data/interim/data_features_03.pkl")
+
