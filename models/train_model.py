@@ -61,3 +61,32 @@ feature_set_2 = list(set(basic_features + square_features + pca_features))
 feature_set_3 = list(set(feature_set_2 + time_features))
 feature_set_4 = list(set(feature_set_3 + freq_features + cluster_features))
 # I will use these to make different data selections
+
+
+
+
+# Do forward feature selection making use of a simple decicion tree
+learner = ClassificationAlgorithms()
+max_features = 10
+# loop over all columns and train a decision tree
+selected_features, ordered_features, ordered_cores = learner.forward_selection(max_features, X_train, y_train)
+
+selected_features = ['pca_1',
+                    'duration',
+                    'acc_z_freq_0.0_Hz_ws_14',
+                    'acc_y_temp_mean_ws_5',
+                    'gyr_x_freq_1.071_Hz_ws_14',
+                    'gyr_y_freq_2.143_Hz_ws_14',
+                    'acc_z_freq_1.071_Hz_ws_14',
+                    'acc_r_freq_0.714_Hz_ws_14',
+                    'gyr_y_freq_1.429_Hz_ws_14',
+                    'gyr_y_freq_0.714_Hz_ws_14']
+
+# visualize the results
+plt.figure(figsize=(10, 5))
+plt.plot(np.arange(1, max_features + 1, 1), ordered_cores)
+plt.xlabel("Number of features")
+plt.ylabel("Accuracy")
+plt.xticks(np.arange(1, max_features + 1, 1))
+plt.show()
+
