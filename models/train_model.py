@@ -210,3 +210,51 @@ plt.show()
 
 
 
+# Perform grid search for establishing hyperparameters and model selection
+# The Neural Network on Feature Set 4 performed tbe best!
+
+(
+    class_train_y,
+    class_test_y,
+    class_train_prob_y,
+    class_test_prob_y,
+) = learner.feedforward_neural_network(
+X_train[feature_set_4], y_train, X_test[feature_set_4], gridsearch=True
+)
+
+accuracy = accuracy_score(y_test, class_test_y)
+
+# build the confusion matrix
+classes = class_test_prob_y.columns
+cm = confusion_matrix(y_test, class_test_y, labels=classes)
+
+# create confusion matrix for cm
+plt.figure(figsize=(10, 10))
+plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
+plt.title("Confusion matrix")
+plt.colorbar()
+tick_marks = np.arange(len(classes))
+plt.xticks(tick_marks, classes, rotation=45)
+plt.yticks(tick_marks, classes)
+
+thresh = cm.max() / 2.0
+for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+    plt.text(
+        j,
+        i,
+        format(cm[i, j]),
+        horizontalalignment="center",
+        color="white" if cm[i, j] > thresh else "black",
+    )
+plt.ylabel("True label")
+plt.xlabel("Predicted label")
+plt.grid(False)
+plt.show()
+
+
+
+
+
+# Select train and test data based on participant
+
+
