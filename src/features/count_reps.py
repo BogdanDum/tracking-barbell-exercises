@@ -57,4 +57,46 @@ plot_df[plot_df["set"] == plot_df["set"].unique()[0]]["gyr_r"].plot()
 
 
 
+# Set up LowPassFilter to eliminate noise
+fs = 1000 / 200
+lowpass = LowPassFilter()
+
+
+
+# Apply LowPassFilter
+bench_set = bench_df[bench_df["set"] == bench_df["set"].unique()[0]]
+squat_set = squat_df[squat_df["set"] == squat_df["set"].unique()[0]]
+row_set = row_df[row_df["set"] == row_df["set"].unique()[0]]
+ohp_set = ohp_df[ohp_df["set"] == ohp_df["set"].unique()[0]]
+dead_set = dead_df[dead_df["set"] == dead_df["set"].unique()[0]]
+
+bench_set["acc_r"].plot() # heavy set (5 reps)
+
+col = "acc_r"
+lowpass.low_pass_filter(dead_set, col = col, sampling_frequency= fs, cutoff_frequency=0.4, order=5)[col + "_lowpass"].plot()
+
+
+
+
+# Create function to count reps
+# count mins and maxes to count reps
+def count_reps(dataset, cutoff = 0.4, order = 10, col = "acc_r"):
+    data = lowpass.low_pass_filter(dataset, col = col, sampling_frequency= fs, cutoff_frequency=cutoff, order=order)
+
+    # indexes of the peaks
+    indexes = argrelextrema(data[col + "_lowpass"].values, np.greater)
+    peaks = data.iloc[indexes]
+    
+    fig, ax = plt.subplots()
+    plt.plot(dataset[f"{col}_lowpass"])
+    plt.plot(peaks[f"{col}_lowpass"], "o", color="red")
+    ax.set_ylabel(f"{col}_lowpass")
+    exercise = dataset["label"].iloc[0].title()
+    category = dataset["category"].iloc[0].title()
+    plt.title(f"{category} {exercise}: {len(peaks)} Reps")
+    plt.show()
+    
+    return len(peaks)
+
+count_reps(dead_set)
 
