@@ -2,6 +2,7 @@
 
 
 The model that I have created can detect 5 barbel exercises and count the number of reps for them: 
+
 - **Bench press**
 ![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Bench_press.png)
 
