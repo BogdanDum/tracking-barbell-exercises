@@ -1,5 +1,6 @@
 # Model that can track anc count the number of reps for 5 gym exercises
 
+
 The model that I have created can detect 5 barbel exercises and count the number of reps for them: 
 - **Bench press**
 ![alt text](/Users/bogdanduminica/Documents/Bench_press.png)
