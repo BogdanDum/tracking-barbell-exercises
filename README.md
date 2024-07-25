@@ -32,4 +32,5 @@ Really briefly, the steps I have taken were the following:
 - Set up counting the reps: view data for patterns, apply and tweak the lowpass filter, create function for count and a benchmark dataframe and evaluate the final results
 
 For identifying the exercise, the model came up to an accuracy of approximately 99%, which is great! Additionally, the rep counting is off by an average of approximately 1 rep. Further work will go on on this to try and perfect the model's performance. 
+For more insides of the whole process,  there are comments made on the commits that are pretty clear and describe the whole process more in detail. 
 
