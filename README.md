@@ -2,19 +2,19 @@
 
 The model that I have created can detect 5 barbel exercises and count the number of reps for them: 
 - **Bench press**
-![alt text](https://www.shutterstock.com/image-vector/man-doing-barbell-bench-press-chest-1841766727)
+![alt text](/Users/bogdanduminica/Documents/Bench_press.png)
 
 - **Squat**
-![alt text](https://www.shutterstock.com/image-vector/man-doing-smith-machine-barbell-squat-2388644813)
+![alt text](/Users/bogdanduminica/Documents/Squat.png)
 
 - **Overhead Press**
-![alt text](https://www.shutterstock.com/image-vector/man-doing-smith-machine-barbell-squat-2388644813)
+![alt text](/Users/bogdanduminica/Documents/Overhead_press.png)
 
 - **Deadlift**
-![alt text](https://www.shutterstock.com/image-vector/man-doing-sumo-barbell-deadlifts-exercise-2034318965)
+![alt text](/Users/bogdanduminica/Documents/Deadlift.png)
 
 - **Row**
-![alt text](https://www.shutterstock.com/image-vector/man-doing-bentover-barbell-rows-floor-1840374166)
+![alt text](/Users/bogdanduminica/Documents/Row.png)
 
 The model can also detect **resting periods**, making it really handy for the user.
 
