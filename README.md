@@ -3,19 +3,19 @@
 
 The model that I have created can detect 5 barbel exercises and count the number of reps for them: 
 - **Bench press**
-![alt text](/Users/bogdanduminica/Documents/Bench_press.png)
+![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Bench_press.png)
 
 - **Squat**
-![alt text](/Users/bogdanduminica/Documents/Squat.png)
+![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Squat.png)
 
 - **Overhead Press**
-![alt text](/Users/bogdanduminica/Documents/Overhead_press.png)
+![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Overhead_press.png)
 
 - **Deadlift**
-![alt text](/Users/bogdanduminica/Documents/Deadlift.png)
+![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Deadlift.png)
 
 - **Row**
-![alt text](/Users/bogdanduminica/Documents/Row.png)
+![alt text](https://github.com/BogdanDum/tracking-barbell-exercises/blob/dataprocessing/reports/figures/Row.png)
 
 The model can also detect **resting periods**, making it really handy for the user.
 
